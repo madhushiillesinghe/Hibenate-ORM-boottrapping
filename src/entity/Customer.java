@@ -14,8 +14,8 @@ public class Customer {
     //@Id annotation define the id is primary key in the customer table
     //@ column annotation represent the column name of db table
     @Id
-    @Column (name="customerId")
-    private  int id;
+    @Column(name = "customerId")
+    private int id;
     @Column (name="customerName")
     private String name;
     @Column (name="customerAddress")

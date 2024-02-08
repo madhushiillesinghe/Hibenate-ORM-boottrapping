@@ -1,6 +1,7 @@
 package config;
 
 import entity.Customer;
+import entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -23,6 +24,7 @@ public class SessionFactoryConfig {
        //2.create meta data Object
       Metadata metadata = new MetadataSources(serviceRegistry)
                 .addAnnotatedClass(Customer.class)
+                .addAnnotatedClass(Employee.class)
                 .getMetadataBuilder()
                 .build();
 
