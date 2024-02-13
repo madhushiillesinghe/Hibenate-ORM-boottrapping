@@ -11,26 +11,29 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class SessionFactoryConfig {
     //1.use the singleton
-    private static  SessionFactoryConfig factoryConfig;
-    private SessionFactoryConfig(){
-    }
-    public static SessionFactoryConfig getInstance(){
-        return (factoryConfig==null?new SessionFactoryConfig():factoryConfig);
-    }
-    public Session getSession(){
-        // create service register
-       StandardServiceRegistry serviceRegistry= new StandardServiceRegistryBuilder().configure().build();
+    private static SessionFactoryConfig factoryConfig;
+    private final SessionFactory sessionFactory;
 
-       //2.create meta data Object
-      Metadata metadata = new MetadataSources(serviceRegistry)
+
+    private SessionFactoryConfig(){
+        // create service register
+        StandardServiceRegistry serviceRegistry= new StandardServiceRegistryBuilder().configure().build();
+
+        //2.create meta data Object
+        Metadata metadata = new MetadataSources(serviceRegistry)
                 .addAnnotatedClass(Customer.class)
                 .addAnnotatedClass(Employee.class)
                 .getMetadataBuilder()
                 .build();
 
-      //3.create session factory
-        SessionFactory sessionFactory = metadata.buildSessionFactory();
+        //3.create session factory
+        sessionFactory = metadata.buildSessionFactory();
 
+    }
+    public static SessionFactoryConfig getInstance(){
+        return (factoryConfig==null)?factoryConfig=new SessionFactoryConfig():factoryConfig;
+    }
+    public Session getSession(){
        return sessionFactory.openSession();
     }
 }
